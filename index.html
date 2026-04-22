@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>雙重任務訓練營 - 動身體能學院</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@700&family=DotGothic16&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/css">
+      /* Custom Theme Variables and Base Styles */
+      :root {
+        --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --font-display: "Space Grotesk", sans-serif;
+        --font-pixel: "DotGothic16", sans-serif;
+        
+        --color-sport-bg: #111111;
+        --color-sport-panel: #1a1a1a;
+        --color-sport-orange: #FF6B00;
+        --color-sport-yellow: #FFEA00;
+        --color-sport-gray: #333333;
+      }
+
+      @theme {
+        --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --font-display: "Space Grotesk", sans-serif;
+        --font-pixel: "DotGothic16", sans-serif;
+        
+        --color-sport-bg: #111111;
+        --color-sport-panel: #1a1a1a;
+        --color-sport-orange: #FF6B00;
+        --color-sport-yellow: #FFEA00;
+        --color-sport-gray: #333333;
+      }
+
+      body {
+        background-color: var(--color-sport-bg);
+        color: white;
+        font-family: var(--font-sans);
+        overflow-x: hidden;
+        background-image: 
+          linear-gradient(45deg, #151515 25%, transparent 25%), 
+          linear-gradient(-45deg, #151515 25%, transparent 25%), 
+          linear-gradient(45deg, transparent 75%, #151515 75%), 
+          linear-gradient(-45deg, transparent 75%, #151515 75%);
+        background-size: 10px 10px;
+        min-height: 100vh;
+      }
+
+      .sport-bevel {
+        position: relative;
+        border: 2px solid var(--color-sport-gray);
+        background-color: var(--color-sport-panel);
+      }
+      
+      .sport-bevel::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        width: 1rem;
+        height: 1rem;
+        border-top: 4px solid var(--color-sport-orange);
+        border-left: 4px solid var(--color-sport-orange);
+      }
+
+      /* Animation Helpers */
+      .fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+      .fade-out {
+        animation: fadeOut 0.3s ease-out forwards;
+      }
+      .pop-in {
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-10px); }
+      }
+      @keyframes popIn {
+        from { opacity: 0; scale: 0.8; }
+        to { opacity: 1; scale: 1; }
+      }
+
+      /* Transitions for game content */
+      #game-display-container {
+        transition: all 0.3s ease;
+      }
+
+      /* Hide sections */
+      .hidden {
+        display: none !important;
+      }
+
+      /* Font classes */
+      .font-sans { font-family: var(--font-sans); }
+      .font-display { font-family: var(--font-display); }
+      .font-pixel { font-family: var(--font-pixel); }
+
+      /* Custom Colors matches */
+      .bg-sport-orange { background-color: var(--color-sport-orange); }
+      .bg-sport-yellow { background-color: var(--color-sport-yellow); }
+      .text-sport-orange { color: var(--color-sport-orange); }
+      .text-sport-yellow { color: var(--color-sport-yellow); }
+      .border-sport-gray { border-color: var(--color-sport-gray); }
+
+      /* Slider styles */
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 12px;
+        background: #000;
+        border: 1px solid var(--color-sport-gray);
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: 2px solid white;
+        height: 24px;
+        width: 12px;
+        background: var(--color-sport-orange);
+        cursor: pointer;
+        margin-top: -7px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="min-h-screen flex flex-col items-center p-6 w-full max-w-4xl mx-auto relative font-sans">
+      <div class="fixed bottom-1 right-4 text-[10px] uppercase tracking-widest text-white/30 pointer-events-none z-50 font-sans">
+        設計者 體感互動健康促進專家 儲良均老師
+      </div>
+
+      <header class="text-center mb-10">
+        <h1 class="text-[22px] sm:text-3xl md:text-6xl font-pixel uppercase tracking-tighter text-white drop-shadow-[3px_3px_0px_#FF6B00] border-4 border-cyan-400 p-2 md:p-4 inline-block whitespace-nowrap">
+          雙重任務訓練營
+        </h1>
+        <p class="mt-4 text-sport-yellow font-display text-sm md:text-xl tracking-[0.3em] font-bold">
+          數位教學專業設計
+        </p>
+      </header>
+
+      <div id="setup-view" class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
+        <div class="space-y-6">
+          <section class="sport-bevel p-5">
+            <h2 class="text-sm font-display text-sport-yellow uppercase mb-4 flex items-center justify-center border-2 border-cyan-400 py-1">
+              SELECT MODE / 選擇模式
+            </h2>
+            <div class="space-y-3" id="mode-buttons">
+              <button data-mode="number" class="w-full p-4 text-center font-bold text-xl transition-all duration-200 border-2 bg-sport-orange border-cyan-400 text-white shadow-[0_0_15px_rgba(0,255,255,0.6)]">
+                <span class="block">數字挑戰</span>
+              </button>
+              <button data-mode="color" class="w-full p-4 text-center font-bold text-xl transition-all duration-200 border-2 bg-[#1a1a1a] border-sport-gray text-white">
+                <span class="block">顏色辨識挑戰</span>
+              </button>
+              <button data-mode="shape" class="w-full p-4 text-center font-bold text-xl transition-all duration-200 border-2 bg-[#1a1a1a] border-sport-gray text-white">
+                <span class="block">形形色色挑戰</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="sport-bevel p-5">
+            <h2 class="text-xs font-display text-sport-yellow uppercase mb-4 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-2"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+              2. 訓練參數
+            </h2>
+            <div class="space-y-6">
+              <div class="flex justify-between items-center">
+                <span class="text-sm font-bold flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock text-sport-orange"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  訓練時間
+                </span>
+                <select id="duration-select" class="bg-black border-2 border-sport-gray text-sport-yellow p-2 font-display outline-none cursor-pointer">
+                  <option value="0">無限制 (∞)</option>
+                  <option value="60">1 MIN</option>
+                  <option value="120">2 MINS</option>
+                  <option value="180" selected>3 MINS</option>
+                  <option value="240">4 MINS</option>
+                  <option value="300">5 MINS</option>
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-sport-orange"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    切換速度
+                  </span>
+                  <span id="speed-display" class="text-sport-yellow font-display text-lg">4.0 SEC</span>
+                </div>
+                <input type="range" id="speed-range" min="0.5" max="6.0" step="0.5" value="4.0" class="cursor-pointer">
+                <div class="flex justify-between text-[10px] font-bold text-white/40 uppercase">
+                  <span>Fast / 快</span>
+                  <span>Slow / 慢</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-sport-orange"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    節拍器速度
+                  </span>
+                  <span id="bpm-display" class="text-sport-yellow font-display text-lg">60 BPM</span>
+                </div>
+                <input type="range" id="bpm-range" min="40" max="240" step="1" value="60" class="cursor-pointer">
+                <div class="flex justify-between text-[10px] font-bold text-white/40 uppercase">
+                  <span>Slow / 慢</span>
+                  <span>Fast / 快</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="space-y-6">
+          <section class="sport-bevel p-5">
+            <h2 class="text-xs font-display text-sport-yellow uppercase mb-4 flex items-center gap-2">
+              3. 功能設定
+            </h2>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="grid grid-cols-2 gap-4">
+                <button id="toggle-bgm" class="p-3 flex items-center justify-center gap-2 font-bold border-2 transition-colors bg-green-500 text-black border-white">
+                  BGM
+                </button>
+                <button id="toggle-sfx" class="p-3 flex items-center justify-center gap-2 font-bold border-2 transition-colors bg-green-500 text-black border-white">
+                  SFX
+                </button>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <button id="toggle-metronome" class="p-3 flex items-center justify-center gap-2 font-bold border-2 transition-colors bg-sport-gray text-white/50 border-transparent">
+                  節拍器: OFF
+                </button>
+                <button id="toggle-answer" class="p-3 flex items-center justify-center gap-2 font-bold border-2 transition-colors bg-sport-yellow text-black border-white">
+                  解答: ON
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <button id="start-btn" style="background: linear-gradient(to bottom, #FFEA00, #FF6B00);" class="w-full p-6 text-black font-display text-3xl font-bold border-4 border-white shadow-[0_6px_0px_#b34a00,0_10px_20px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-[0_2px_0px_#b34a00,0_5px_10px_rgba(0,0,0,0.5)] transition-all">
+            <span class="block flex items-center justify-center gap-3">
+              遊戲開始
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div id="running-view" class="w-full flex flex-col h-full hidden">
+        <div id="instruction-banner" class="border-4 border-white p-4 mb-4 relative min-h-[100px] flex items-center bg-sport-orange text-black">
+          <div class="pr-24 w-full">
+            <div id="instruction-text" class="font-bold text-lg md:text-2xl leading-tight border-2 border-cyan-400 p-2 inline-block w-full">
+              </div>
+          </div>
+          <div id="timer-display" class="absolute -right-2 top-1/2 -translate-y-1/2 bg-black border-4 border-white text-green-400 p-2 font-mono text-2xl md:text-4xl font-bold min-w-[120px] text-center">
+            03:00
+          </div>
+        </div>
+
+        <div class="h-10 md:h-14 flex items-center justify-center mb-2">
+          <div id="answer-popup" class="hidden bg-white text-black px-6 py-1 font-display text-xl md:text-3xl font-bold border-2 border-sport-yellow shadow-lg z-20 pop-in">
+            </div>
+        </div>
+
+        <div class="relative w-full aspect-video md:aspect-square max-h-[50vh] bg-black border-4 border-sport-gray flex items-center justify-center mb-4 shadow-[inset_0_0_60px_rgba(255,107,0,0.2)] overflow-hidden">
+          <div id="stimulus-content" class="flex items-center justify-center w-full h-full p-8 pop-in">
+            </div>
+        </div>
+
+        <div id="led-container" class="flex justify-center gap-2 mb-6 h-8">
+          </div>
+
+        <button id="stop-btn" class="mx-auto px-16 py-4 bg-black border-4 border-cyan-400 text-red-500 font-display text-3xl font-bold uppercase shadow-[0_0_20px_rgba(0,255,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+          <span class="block flex items-center gap-4">
+            <div class="w-6 h-6 bg-red-600"></div> STOP
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let vmM=typeof globalThis!=='undefined'?globalThis:typeof window!=='undefined'?window:global,vmi=Object['defineProperty'],vmj=Object['create'],vmw=Object['getOwnPropertyDescriptor'],vmD=Object['getOwnPropertyNames'],vmJ=Object['getOwnPropertySymbols'],vmL=Object['setPrototypeOf'],vmh=Object['getPrototypeOf'],vmQ=Function['prototype']['call'],vmH=Function['prototype']['apply'],vmK=Reflect['apply'],vmq=WeakMap['prototype']['set'],vmu=WeakMap['prototype']['get'],vmc=WeakMap['prototype']['has'],vmk=WeakSet['prototype']['add'],vmg=WeakSet['prototype']['has'],vmb_1dd590=vmM['vmb_1dd590']||(vmM['vmb_1dd590']={});const vmC_9f7b9d=(function(){let a=['AQCAAQAAAAYIBmN0eAMIDmVuYWJsZWQUAAAEAAAABAEEAgAAAMACBI4BBsACAI4BBgJw','AQCAAQACAAIIDmVuYWJsZWQMwAIQjgEGAnAABAAEAAAAAA==','AQCIAQAAABAIBmN0eAgMd2luZG93CBhBdWRpb0NvbnRleHQIJHdlYmtpdEF1ZGlvQ29udGV4dAQACApzdGF0ZQgSc3VzcGVuZGVkCAxyZXN1bWU+AAQAAAAABAEEAgAAAAQBBAMEBAQABAAAAAQABAUEBgAAAAQAAAQHBAQEAAAAAMACjAFAaMAClgGMAQhmBpYBjAEA0AGOAQbAAowBjAEAVGjAAowBCIwBAG4GAnAGBiAQGCo6','AQCIAQAABCoIDmVuYWJsZWQICGluaXQEAAgGY3R4CCBjcmVhdGVPc2NpbGxhdG9yCBRjcmVhdGVHYWluCA5jb25uZWN0BAEIFmRlc3RpbmF0aW9uCBB0cmlhbmdsZQgIdHlwZQgSZnJlcXVlbmN5CBxzZXRWYWx1ZUF0VGltZQUgAwgWY3VycmVudFRpbWUEAggIZ2FpbgeamZmZmZm5PwgKc3RhcnQICHN0b3AHuB6F61G4nj/KAcACAIwBBABAAGgAAgBwAMACAAgAjAEEAQAEAm4EAAYAwAIAjAEEAwgAjAEEBAAEAm4EAA4EAMACAIwBBAMIAIwBBAUABAJuBAAOBAEMBAAIAIwBBAYMBAE2ADYAAAQHbgQBBgAMBAEIAIwBBAbAAgCMAQQDjAEECDYANgAABAduBAEGAAwEAAAECY4BBAoGAAwEAIwBBAsIAIwBBAwABA02ADYAwAIAjAEEA4wBBA42ADYAAAQPbgQCBgAMBAGMAQQQCACMAQQMAAQRNgA2AMACAIwBBAOMAQQONgA2AAAED24EAgYADAQACACMAQQSAAQCbgQABgAMBAAIAIwBBBPAAgCMAQQDjAEEDgAEFBQANgA2AAAEB24EAQYAAgBwAAIGDA==','AQCIAQAABCwIDmVuYWJsZWQICGluaXQEAAgGY3R4CCBjcmVhdGVPc2NpbGxhdG9yCBRjcmVhdGVHYWluCA5jb25uZWN0BAEIFmRlc3RpbmF0aW9uCAxzcXVhcmUICHR5cGUIEmZyZXF1ZW5jeQgcc2V0VmFsdWVBdFRpbWUF6AMIFmN1cnJlbnRUaW1lBAIICGdhaW4HmpmZmZmZyT8IOGV4cG9uZW50aWFsUmFtcFRvVmFsdWVBdFRpbWUH/Knx0k1iUD8ICnN0YXJ0CAhzdG9w7AHAAowBQGgCcMACCIwBAG4GwAKMAQiMAQBuDsACjAEIjAEAbg4MCIwBDDY2AG4GDAiMAcACjAGMATY2AG4GDACOAQYMjAEIjAEANjbAAowBjAE2NgBuBgyMAQiMAQA2NsACjAGMATY2AG4GDIwBCIwBADY2wAKMAYwBABQ2NgBuBgwIjAEAbgYMCIwBwAKMAYwBABQ2NgBuBgJwAAQAAAAAAAAABAEEAgQAAAAEAwAEBAQCBAAEAAAEAwAEBQQCBAAEAQQAAAQGBAEAAAQHBAEABAEABAYABAMECAAABAcEAQAEAAQJBAoABAAECwAEDAQNAAAABAMEDgAABA8EAgAEAQQQAAQMBBEAAAAEAwQOAAAEDwQCAAQBBBAABBIEEwAAAAQDBA4EEQAAAAQPBAIABAAABBQEAgQAAAQAAAQVAAQDBA4EEQAAAAQHBAEAAAACBgw=','AQEIAQACAAwIDmRhdGFzZXQICG1vZGUICnN0YXRlCLwCdy1mdWxsIHAtNCB0ZXh0LWNlbnRlciBmb250LWJvbGQgdGV4dC14bCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0yMDAgYm9yZGVyLTIgYmctc3BvcnQtb3JhbmdlIGJvcmRlci1jeWFuLTQwMCB0ZXh0LXdoaXRlIHNoYWRvdy1bMF8wXzE1cHhfcmdiYSgwLDI1NSwyNTUsMC42KV0IEmNsYXNzTmFtZQjuAXctZnVsbCBwLTQgdGV4dC1jZW50ZXIgZm9udC1ib2xkIHRleHQteGwgdHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tMjAwIGJvcmRlci0yIGJnLVsjMWExYTFhXSBib3JkZXItc3BvcnQtZ3JheSB0ZXh0LXdoaXRlIAQAEAQAjAEEAYwBBAKmAwQBjAEAVABoBAAQBAMABASOAQAGAGQEABAEBQAEBI4BAAYEDBgWIA==','AQAIAQAAAFAIEGVsZW1lbnRzCBZtb2RlQnV0dG9ucwgOZm9yRWFjaAQFBAEIGHNwZWVkRGlzcGxheQgKc3RhdGUICnNwZWVkCA50b0ZpeGVkCAggU0VDCBZ0ZXh0Q29udGVudAgUYnBtRGlzcGxheQgYbWV0cm9ub21lQnBtCAggQlBNCBJ0b2dnbGVCZ20IoAFwLTMgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgZm9udC1ib2xkIGJvcmRlci0yIHRyYW5zaXRpb24tY29sb3JzIAgUYmdtRW5hYmxlZAhIYmctZ3JlZW4tNTAwIHRleHQtYmxhY2sgYm9yZGVyLXdoaXRlCFxiZy1zcG9ydC1ncmF5IHRleHQtd2hpdGUvNTAgYm9yZGVyLXRyYW5zcGFyZW50CBJjbGFzc05hbWUIEnRvZ2dsZVNmeAgUc2Z4RW5hYmxlZAgedG9nZ2xlTWV0cm9ub21lCCBtZXRyb25vbWVFbmFibGVkCEZiZy1jeWFuLTUwMCB0ZXh0LWJsYWNrIGJvcmRlci13aGl0ZQgW56+A5ouN5ZmoOiAIBE9OCAZPRkYIGHRvZ2dsZUFuc3dlcggic2hvd0Fuc3dlckVuYWJsZWQITmJnLXNwb3J0LXllbGxvdyB0ZXh0LWJsYWNrIGJvcmRlci13aGl0ZQgQ6Kej562UOiAICHZpZXcICnNldHVwCBJzZXR1cFZpZXcIEmNsYXNzTGlzdAgMcmVtb3ZlCAxoaWRkZW4IFnJ1bm5pbmdWaWV3CAZhZGTIAqYDBACMAQQBCACMAQQCAAQDyAEANgA2AAAEBG4EAQYApgMEAIwBBAWmAwQGjAEEBwgAjAEECAAEBDYANgAABARuBAEABAkUAI4BBAoGAKYDBACMAQQLpgMEBowBBAwABA0UAI4BBAoGAKYDBACMAQQOAAQPpgMEBowBBBBoAAAEEWQAAAQSOgAUAI4BBBMGAKYDBACMAQQUAAQPpgMEBowBBBVoAAAEEWQAAAQSOgAUAI4BBBMGAKYDBACMAQQWAAQPpgMEBowBBBdoAAAEGGQAAAQSOgAUAI4BBBMGAKYDBACMAQQWAAQZpgMEBowBBBdoAAAEGmQAAAQbOgAUAI4BBAoGAKYDBACMAQQcAAQPpgMEBowBBB1oAAAEHmQAAAQSOgAU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','AQEIAQAAABIIEHRpbWVMZWZ0CApzdGF0ZQgQZWxlbWVudHMIGHRpbWVyRGlzcGxheQgUZm9ybWF0VGltZQQBCBZ0ZXh0Q29udGVudAQACBhzdG9wVHJhaW5pbmc4BAEEAAAAAAQBAAQAAAAEAgQDBAEEAAQEBAUEAQQGAAQBBAAEBwAABAgEBwQAAKYDjAE4CCKmAwqOAQYGpgOMAaYDjAGmAwBsjgEGpgOMAQBaaKYDAGwGAi44','AQEACQAAAAQGCAphdWRpbwgQcGxheVRpY2sEABAEAKoDBACkAwQApgMACAQBjAEEAgAEAG4ABg==','AQAIAQAAAk4ICnN0YXRlCA5ydW5uaW5nCAh2aWV3CBBkdXJhdGlvbggQdGltZUxlZnQIEnByZXZTaGFwZQgQdXBkYXRlVUkEAAgIbW9kZQgMbnVtYmVyCBBlbGVtZW50cwgiaW5zdHJ1Y3Rpb25CYW5uZXIIxAFib3JkZXItNCBib3JkZXItd2hpdGUgcC00IG1iLTQgcmVsYXRpdmUgbWluLWgtWzEwMHB4XSBmbGV4IGl0ZW1zLWNlbnRlciBiZy1zcG9ydC1vcmFuZ2UgdGV4dC1ibGFjawgSY2xhc3NOYW1lCB5pbnN0cnVjdGlvblRleHQItgE8ZGl2PuWWruaVuO+8muW3puaJi+avlOWHuuWNgeS9jeaVuOOAgeWPs+aJi+avlOWHuuWAi+S9jeaVuDwvZGl2PjxkaXY+6ZuZ5pW477ya5ouN5omLPC9kaXY+CBJpbm5lckhUTUwICmNvbG9yCLoBYm9yZGVyLTQgYm9yZGVyLXdoaXRlIHAtNCBtYi00IHJlbGF0aXZlIG1pbi1oLVsxMDBweF0gZmxleCBpdGVtcy1jZW50ZXIgYmctcmVkLTYwMCB0ZXh0LXdoaXRlCJgBPGRpdj7lrZfoiIfoibLkuI3lkIzvvJrmi43miYs8L2Rpdj48ZGl2PuWtl+iIh+iJsuebuOWQjO+8muW/teWHuumhj+iJsjwvZGl2PgjAAWJvcmRlci00IGJvcmRlci13aGl0ZSBwLTQgbWItNCByZWxhdGl2ZSBtaW4taC1bMTAwcHhdIGZsZXggaXRlbXMtY2VudGVyIGJnLXB1cnBsZS03MDAgdGV4dC13aGl0ZQhU6Lef5YmN5LiA5YCL5b2i54uA5oiW6aGP6Imy55u45ZCM5pmC5ouN5omLCBh0aW1lckRpc3BsYXkIFGZvcm1hdFRpbWUEAQgWdGV4dENvbnRlbnQEDAXoAwgWc2V0SW50ZXJ2YWwEAggOdGltZXJJZAgG4oieCCBtZXRyb25vbWVFbmFibGVkCBhfMHg0YzU1YzMkJDEGYOoAAAgYbWV0cm9ub21lQnBtBA0IJm1ldHJvbm9tZUludGVydmFsSWQIDnJ1blN0ZXDmAQQABAEEAgAEAAQABAMEBAAEAAAEBQAEBgQHBAAABAAECAQJAAAECgQLBAwEDQAECgQOBA8EEAAABAAECAQRAAAECgQLBBIEDQAECgQOBBMEEAAABAoECwQUBA0ABAoEDgQVBBAABAAEAwQHAAAECgQWBAAEBAQXBBgEAQQZAAQABBoABBsEHAQdBAIEHgAABAoEFgQfBBkABAAEIAAEAAQABCEEIgQABCMABCEEAAQkAAQhBBwEHQQCBCUABAAEJgQHBAAAAACmAwCOAQamA6YDjAGOAQamAwSOAQamAwBsBqYDjAEAVGimA4wBAI4BBqYDjAEAjgEGZKYDjAEAVGimA4wBAI4BBqYDjAEAjgEGZKYDjAEAjgEGpgOMAQCOAQamA4wBAFxopgOMAaYDjAGmAwBsjgEGpgMAyAEAlgEAbI4BBmSmA4wBAI4BBqYDjAFoqgOkA7QDAKYDjAEasgOmAwDIAaYDlgEAbI4BBqwDpgMAbAYCcA4qQkB2SmJgdn6mAaQBsAG0AdoB','AQAIAQAAABgICnN0YXRlCA50aW1lcklkCBpjbGVhckludGVydmFsBAEIDHN0ZXBJZAgYY2xlYXJUaW1lb3V0CBpsZWRJbnRlcnZhbElkCCZtZXRyb25vbWVJbnRlcnZhbElkCApzZXR1cAgIdmlldwgQdXBkYXRlVUkEAFymA4wBaKYDjAGWAQBsBqYDjAFopgOMAZYBAGwGpgOMAWimA4wBlgEAbAamA4wBaKYDjAGWAQBsBqYDAI4BBqYDAGwGAnAEAAQBAAQABAEEAgQDBAEABAAEBAAEAAQEBAUEAwQBAAQABAYABAAEBgQCBAMEAQAEAAQHAAQABAcEAgQDBAEABAAECAQJAAQKBAsEAAAAAAgEEhYkKDY6SA==','AQAIAQACBBgEAAgKMDA6MDAICE1hdGgICmZsb29yBDwEAQgQdG9TdHJpbmcIEHBhZFN0YXJ0BAIIAjAIAAgCOnYQAFpoAHCWAQiMARAAGjY2AG4IjAEAbgiMAQA2NgA2NgBuDhAAHAiMAQBuCIwBADY2ADY2AG4OAAw6FAAUDDoUcAQABAAAAAQBAAQCAAQDBAAEBAAAAAQFBAEABAYEAAQAAAQHBAgAAAQJAAAECAQCBAEEAAQEAAAEBgQABAAABAcECAAABAkAAAQIBAIEAgQKBAEAAAQLAAQCAAAAAgYM','AQEACQAAAAQMCApzdGF0ZQgSXzB4NWM3Nzc1CA5kYXRhc2V0CAhtb2RlCBB1cGRhdGVVSQQAGKoDpAOmA6YDjAGMAY4BBqYDAGwGBAAEAAQABAEEAgQDBAMABAQEBQQAAA==','AQAAAQACAAYIEl8weDVjNzc3NQQRCA5vbmNsaWNrGgQABAAEAAQAAAQABAEABAIABAAAAKoDpAMQrgMGpgMAyAGOAQasAwJw','AQAAAQACAA4ICnN0YXRlCAx0YXJnZXQICnZhbHVlCAxOdW1iZXIEAQgQZHVyYXRpb24IEHRpbWVMZWZ0IKYDEIwBjAGWAQBsjgEGpgOmA4wBjgEGAnAEAAQABAEEAgQDBAQEAQQFAAQABAAEBQQGAAAA','AQAAAQACABAICnN0YXRlCAx0YXJnZXQICnZhbHVlCAxOdW1iZXIEAQgKc3BlZWQIEHVwZGF0ZVVJBAAepgMEABAEAIwBBAGMAQQClgEEAwAEBGwEAY4BBAUGAKYDBAYABAdsBAAGAAIAcAA=','AQAAAQACABAICnN0YXRlCAx0YXJnZXQICnZhbHVlCAxOdW1iZXIEAQgYbWV0cm9ub21lQnBtCBB1cGRhdGVVSQQAHqYDBAAQBACMAQQBjAEEApYBBAMABARsBAGOAQQFBgCmAwQGAAQHbAQABgACAHAA','AQAAAQAAAAgICnN0YXRlCBRiZ21FbmFibGVkCBB1cGRhdGVVSQQAGKYDBACmAwQAjAEEAUAAjgEEAQYApgMEAgAEA2wEAAYAAgBwAA==','AQ
